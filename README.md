@@ -93,12 +93,54 @@ To start the project, simply run
 ./gradlew bootRun
 ```
 
+## Run tests
+
+To run the tests, simply run
+```
+./gradlew test
+```
+
 Once the service started, the endpoint will be available at `localhost:8080`, so you can make request to the service endpoint
 
 ```json
 GET localhost:8080/reply/helloworld
 
 {
-    message: "helloword"
+    data: "helloword"
+}
+```
+
+```json
+GET localhost:8080/v2/reply/12-helloworld
+
+{
+    data: "49afed3c7cf18693ac7f319cd01ffae4"
+}
+```
+
+If the message is invalid, then error message will be returned (the status code will be 400):
+
+```json
+GET localhost:8080/v2/reply/13-helloworld
+
+{
+    data: "Invalid input",
+    status: "BAD_REQUEST"
+}
+```
+
+PS: currently we treat empty message as a valid input, but the data in response will always be "Message is empty":
+```json
+GET localhost:8080/reply
+
+{
+    data: "Message is empty"
+}
+```
+```json
+GET localhost:8080/v2/reply
+
+{
+    data: "Message is empty"
 }
 ```
